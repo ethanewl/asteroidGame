@@ -8,6 +8,7 @@ class Player(CircleShape):
         super().__init__(x, y, PLAYER_RADIUS)
         self.rotation = 0
         self.shot_coolodown = 0
+        self.lives = 3
         
     def triangle(self):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
@@ -58,6 +59,8 @@ class Player(CircleShape):
             self.shot_coolodown += PLAYER_SHOOT_COOLDOWN_SECONDS
         else:
             return("shoot on cooldown")
+        
+    #def respawn(self):
 
         
     
