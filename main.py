@@ -4,7 +4,7 @@ from player import Player
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
 from shot import Shot
-from score import UI
+from UI import UI
 import pygame
 import sys
 
@@ -33,6 +33,7 @@ def main():
     player = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
     
     score_UI = UI(10, 10, font)
+    Lives_UI = UI(300,10, font)
     
     
     dt = 0
@@ -53,26 +54,36 @@ def main():
         for asteroid in asteroids:
             if asteroid.collides_with(player):
                 log_event("player_hit")
-                print("Game over!")
-                sys.exit()
+                player.lives-=1
+                score_UI.score_element-=10
+
+                if player.lives == 0:
+                    print("Game over!")
+                    sys.exit()
+                    
+                remaining_lives= player.lives    
+                player.kill()
                 
+               
+                player = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
+                player.lives = remaining_lives
+                
+
         for asteroid in asteroids:
             for shot in shots:
                 if shot.collides_with(asteroid):
                     log_event("asteroid_shot")            
                     asteroid.split()
                     shot.kill()
-                    score_UI.score+=10
+                    score_UI.score_element+=10
                     
-                
-        
         screen.fill("black")
-        
         
         for objects in drawable:
             objects.draw(screen)
             
-        score_UI.draw(screen)
+        score_UI.score(screen)
+        Lives_UI.lives(screen, live = player.lives)
             
         pygame.display.flip()
         
