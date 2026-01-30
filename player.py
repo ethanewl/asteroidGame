@@ -22,6 +22,7 @@ class Player(CircleShape):
         self.shot_coolodown = 0
         self.lives = 3
         self.stamina = 100
+        self.accelerating = False
         
     def triangle(self):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
@@ -55,6 +56,7 @@ class Player(CircleShape):
                 return
             self.accelerate(dt)
             self.stamina -= dt*20
+            self.accelerating = True
         
         
         if self.shot_coolodown > 0:
@@ -83,9 +85,14 @@ class Player(CircleShape):
      
     def shoot(self):
         if self.shot_coolodown <= 0:
-            shot = Shot(self.position.x, self.position.y)
-            shot.velocity = pygame.Vector2(0,1).rotate(self.rotation) * PLAYER_SHOT_SPEED
-            self.shot_coolodown += PLAYER_SHOOT_COOLDOWN_SECONDS
+            if self.accelerating == False:
+                shot = Shot(self.position.x, self.position.y)
+                shot.velocity = pygame.Vector2(0,1).rotate(self.rotation) * PLAYER_SHOT_SPEED
+                self.shot_coolodown += PLAYER_SHOOT_COOLDOWN_SECONDS
+            else:
+                shot = Shot(self.position.x, self.position.y)
+                shot.velocity = pygame.Vector2(0,1).rotate(self.rotation) * PLAYER_SHOT_SPEED * PLAYER_ACCELERATION
+                self.shot_coolodown += PLAYER_SHOOT_COOLDOWN_SECONDS
         else:
             return("shoot on cooldown")
         

@@ -50,13 +50,7 @@ def main():
             if event.type == pygame.QUIT:
                 return
         
-        updatable.update(dt)
-        
-        player.wrap_around()
-
-        
-        
-        
+        updatable.update(dt)  
 
         for asteroid in asteroids:
             if asteroid.collides_with(player):
