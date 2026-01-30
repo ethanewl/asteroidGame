@@ -1,7 +1,17 @@
 import pygame
+import math
 from circleshape import CircleShape
 from shot import Shot
-from constants import PLAYER_RADIUS, LINE_WIDTH, PLAYER_TURN_SPEED, PLAYER_SPEED, PLAYER_SHOT_SPEED, PLAYER_SHOOT_COOLDOWN_SECONDS
+from constants import (PLAYER_RADIUS, 
+                    LINE_WIDTH, 
+                    PLAYER_TURN_SPEED, 
+                    PLAYER_SPEED, 
+                    PLAYER_SHOT_SPEED, 
+                    PLAYER_SHOOT_COOLDOWN_SECONDS,
+                    PLAYER_ACCELERATION,
+                    PLAYER_STAMINA_COOLDOWN_SECONDS
+                    )
+
 
 class Player(CircleShape):
     def __init__(self, x, y):
@@ -9,6 +19,7 @@ class Player(CircleShape):
         self.rotation = 0
         self.shot_coolodown = 0
         self.lives = 3
+        self.stamina = 100
         
     def triangle(self):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
@@ -20,6 +31,8 @@ class Player(CircleShape):
     
     def update(self, dt):
         keys = pygame.key.get_pressed()
+        
+
         
         if keys[pygame.K_a]:
             self.rotate(-dt)
@@ -36,6 +49,13 @@ class Player(CircleShape):
         if keys[pygame.K_SPACE]:
             self.shoot()
             
+        if keys[pygame.K_LSHIFT]:
+            if self.stamina <= 0:
+                return
+            self.accelerate(dt)
+            self.stamina -= dt*20
+        
+        
         if self.shot_coolodown > 0:
             self.shot_coolodown -= dt 
             return            
@@ -46,11 +66,21 @@ class Player(CircleShape):
     def rotate(self, dt):
         self.rotation += (PLAYER_TURN_SPEED * dt)
         
+        
     def move(self, dt):
         unit_vector = pygame.Vector2(0, 1)
         vector_rotate = unit_vector.rotate(self.rotation)
         vector_lenth = vector_rotate * (PLAYER_SPEED * dt)
         self.position += vector_lenth
+    
+
+        
+    def accelerate(self, dt):
+        unit_vector = pygame.Vector2(0, 1)
+        vector_rotate = unit_vector.rotate(self.rotation)
+        vector_lenth = vector_rotate * (PLAYER_SPEED  * dt) * PLAYER_ACCELERATION
+        self.position += vector_lenth
+ 
      
     def shoot(self):
         if self.shot_coolodown <= 0:

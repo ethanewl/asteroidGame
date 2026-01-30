@@ -7,6 +7,7 @@ from shot import Shot
 from UI import UI
 import pygame
 import sys
+import math
 
 def main():
 
@@ -20,7 +21,7 @@ def main():
     drawable = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
     shots = pygame.sprite.Group()
-    ui_element = pygame.sprite.Group()
+
     
 
     Asteroid.containers = (asteroids, updatable, drawable)
@@ -30,10 +31,12 @@ def main():
     Player.containers = (updatable, drawable)
     Shot.containers = (shots, updatable, drawable)
     
+    
     player = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
     
     score_UI = UI(10, 10, font)
     Lives_UI = UI(300,10, font)
+    Stamina_UI = UI(600, 10, font)
     
     
     dt = 0
@@ -50,12 +53,15 @@ def main():
         updatable.update(dt)
         
         
-        
+
         for asteroid in asteroids:
             if asteroid.collides_with(player):
                 log_event("player_hit")
                 player.lives-=1
-                score_UI.score_element-=10
+                if score_UI.score_element == 0:
+                    pass
+                else:
+                    score_UI.score_element-=10
 
                 if player.lives == 0:
                     print("Game over!")
@@ -84,6 +90,7 @@ def main():
             
         score_UI.score(screen)
         Lives_UI.lives(screen, live = player.lives)
+        Stamina_UI.stamina(screen, stamina=math.ceil(player.stamina))
             
         pygame.display.flip()
         
