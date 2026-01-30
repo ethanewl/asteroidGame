@@ -15,6 +15,7 @@ def main():
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     clock = pygame.time.Clock()
     
+    bg = pygame.image.load("./source_art/BG.jpeg")    
     font = pygame.font.Font(None, 50)
     
     updatable = pygame.sprite.Group()
@@ -83,7 +84,8 @@ def main():
                     shot.kill()
                     score_UI.score_element+=10
                     
-        screen.fill("black")
+        screen.fill("black")            
+        screen.blit(pygame.transform.scale(bg,(SCREEN_WIDTH,SCREEN_HEIGHT)), (0,0))
         
         for objects in drawable:
             objects.draw(screen)
