@@ -32,7 +32,6 @@ def main():
     Player.containers = (updatable, drawable)
     Shot.containers = (shots, updatable, drawable)
     
-    
     player = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
     
     score_UI = UI(10, 10, font)
@@ -52,6 +51,10 @@ def main():
                 return
         
         updatable.update(dt)
+        
+        player.wrap_around()
+
+        
         
         
 

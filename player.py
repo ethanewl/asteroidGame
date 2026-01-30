@@ -9,7 +9,9 @@ from constants import (PLAYER_RADIUS,
                     PLAYER_SHOT_SPEED, 
                     PLAYER_SHOOT_COOLDOWN_SECONDS,
                     PLAYER_ACCELERATION,
-                    PLAYER_STAMINA_COOLDOWN_SECONDS
+                    PLAYER_STAMINA_COOLDOWN_SECONDS,
+                    SCREEN_WIDTH,
+                    SCREEN_HEIGHT
                     )
 
 
@@ -30,10 +32,9 @@ class Player(CircleShape):
         return [a, b, c]
     
     def update(self, dt):
+        self.wrap_around()
         keys = pygame.key.get_pressed()
-        
-
-        
+    
         if keys[pygame.K_a]:
             self.rotate(-dt)
         
@@ -72,8 +73,6 @@ class Player(CircleShape):
         vector_rotate = unit_vector.rotate(self.rotation)
         vector_lenth = vector_rotate * (PLAYER_SPEED * dt)
         self.position += vector_lenth
-    
-
         
     def accelerate(self, dt):
         unit_vector = pygame.Vector2(0, 1)
@@ -90,8 +89,6 @@ class Player(CircleShape):
         else:
             return("shoot on cooldown")
         
-    
-            
 
         
     
