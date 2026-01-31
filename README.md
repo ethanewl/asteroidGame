@@ -35,8 +35,8 @@ This project focuses on clean game architecture, responsive controls, and classi
   - Lives decrease on collision with asteroids
 
 - **Stamina System**
-  - Stamina limits continuous actions
-  - Regeneration over time
+  - Stamina bar for acceleration
+  - reset of death
 
 - **Visuals**
   - Background image added for improved presentation
@@ -70,4 +70,5 @@ pip install pygame
 git clone https://github.com/ethanewl/asteroids.git
 cd asteroids
 python main.py
+
 
