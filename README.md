@@ -5,6 +5,26 @@ This project focuses on clean game architecture, responsive controls, and classi
 
 ---
 
+**Running the Game**
+
+- git clone https://github.com/ethanewl/asteroidGame.git
+- cd asteroidGame
+- main.py
+
+---
+
+## Requirements
+
+- Python 3.10+
+- Pygame
+
+Install dependencies:
+
+```bash
+pip install pygame
+```
+---
+
 ## Features
 
 - **Player Movement & Acceleration**
@@ -54,21 +74,9 @@ This project focuses on clean game architecture, responsive controls, and classi
 | Shoot        | Space |
 | Accelerate   | L-Shift |
 
----
 
-## Requirements
 
-- Python 3.10+
-- Pygame
 
-Install dependencies:
 
-```bash
-pip install pygame
-```
-
-git clone https://github.com/ethanewl/asteroids.git
-cd asteroids
-python main.py
 
 
